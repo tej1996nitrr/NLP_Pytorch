@@ -1,8 +1,13 @@
 #%%
 #TF Representation
-# the sum of the onehot representations of its constituent words.  
+# the sum of the onehot representations of its constituent words.
+#%%
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 import seaborn as sns
+import torch
+import numpy as np
+#%% 
 corpus = ['Time flies flies like an arrow.',
 'Fruit flies like a banana.']
 vocab=set()
@@ -31,8 +36,6 @@ the IDF will be the maximum possible value, log N.
 E
 xample 12"""
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-import seaborn as sns
 tfidf_vectorizer = TfidfVectorizer()
 tfidf = tfidf_vectorizer.fit_transform(corpus).toarray()
 sns.heatmap(tfidf, annot=True, cbar=False, xticklabels=vocab,
@@ -47,11 +50,46 @@ def describe(x):
     print("Values: \n{}".format(x))
 
 # %%
-import torch
+
 describe(torch.Tensor(2))
-
-
-# %%
-import torch
 describe(torch.rand(2, 3)) # uniform random
 describe(torch.randn(2, 3)) #random normal
+describe(torch.zeros(2,3))
+#%%
+x = torch.ones(2, 3)
+describe(x)
+x.fill_(5) #_=>inplace
+describe(x)
+
+# %%
+#tensor using lists
+x = torch.Tensor([[1, 2, 3],[4, 5, 6]])
+describe(x)
+
+# %%
+
+npy = np.random.rand(2, 3)
+describe(torch.from_numpy(npy))
+
+# %%
+#tensor operations
+x = torch.randn(2, 3)
+describe(x)
+describe(torch.add(x, x))
+describe(x + x)
+
+# %%
+x = torch.arange(6)
+describe(x)
+
+# %%
+x = x.view(2, 3)
+describe(x)
+
+# %%
+describe(torch.sum(x, dim=1))
+
+# %%
+describe(torch.transpose(x, 0, 1))
+
+# %%
