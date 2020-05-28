@@ -21,7 +21,7 @@ one_hot = one_hot_vectorizer.fit_transform(corpus).toarray()
 sns.heatmap(one_hot, annot=True,cbar=False,xticklabels=vocab,yticklabels=['Sentence 2'])
 
 # %%
-#TF-IDF
+#-----------------------------TF-IDF------------------------
 # The IDF representation penalizes common tokens and rewards rare tokens in the vector representation
 """The IDF(w) of a token w is defined with respect to a corpus as:
 IDF(w)=log (N/n)
@@ -43,7 +43,7 @@ yticklabels= ['Sentence 1', 'Sentence 2'])
 
 
 # %%
-#Creating Tensors
+#----------------------------Creating Tensors-----------------------
 def describe(x):
     print("Type: {}".format(x.type()))
     print("Shape/size: {}".format(x.shape))
@@ -62,17 +62,18 @@ x.fill_(5) #_=>inplace
 describe(x)
 
 # %%
-#tensor using lists
+#---------------------------tensor using lists-------------------------
 x = torch.Tensor([[1, 2, 3],[4, 5, 6]])
 describe(x)
 
 # %%
+#---------------------------tensor using numpy-------------------------
 
 npy = np.random.rand(2, 3)
 describe(torch.from_numpy(npy))
 
 # %%
-#tensor operations
+#-------------------------------tensor operations--------------------------
 x = torch.randn(2, 3)
 describe(x)
 describe(torch.add(x, x))
@@ -91,5 +92,32 @@ describe(torch.sum(x, dim=1))
 
 # %%
 describe(torch.transpose(x, 0, 1))
+
+# %%
+#----------------------Indexing/slicing------------------------------
+x = torch.arange(6).view(2, 3)
+describe(x)
+
+# %%
+describe(x[:2, :2])
+describe(x[:1, :2])
+
+# %%
+for i in range(x.shape[0]+1):
+    for j in range(x.shape[1]+1):
+        describe(x[:i,:j])
+
+# %%
+indices = torch.LongTensor([0, 2])
+describe(torch.index_select(x, dim=1, index=indices))
+
+# %%
+indices = torch.LongTensor([0, 1])
+describe(torch.index_select(x, dim=0, index=indices))
+
+# %%
+row_indices = torch.arange(2).long()
+col_indices = torch.LongTensor([0, 1])
+describe(x[row_indices, col_indices])
 
 # %%
